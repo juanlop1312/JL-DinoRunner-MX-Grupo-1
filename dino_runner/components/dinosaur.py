@@ -27,7 +27,9 @@ class Dinosaur :
         self.dino_duck = False
 
         self.shield = False
+        self.tnt = False
         self.shield_time_up =0
+        self.tnt_time_up = 0
         self.has_powerd = False
     
     def update(self, user_input):
@@ -89,16 +91,30 @@ class Dinosaur :
             self.dino_rect.y = self.y_pos_duck
             self.step_index += 1
     
-    def check_visibility(self,screen):
+    def check_visibility(self, screen, obstacle):
+        if self.tnt:
+            time_to_show = round((self.tnt_time_up - pygame.time.get_ticks()) / 1000, 2)
+            if (time_to_show >= 0):
+                font = pygame.font.Font('freesansbold.ttf', 18)
+                text = font.render(f'TNT is Break all for {time_to_show}', True, (0,0,0))
+                text_rect = text.get_rect()
+                text_rect.center = (500, 75)
+                screen.blit(text,text_rect)
+            else:
+                print("TNT ACABADO TIEMPo")
+                obstacle.disable_obstacles = False
+                self.tnt = False
+                
+
         if self.shield:
             time_to_show = round((self.shield_time_up - pygame.time.get_ticks()) / 1000, 2)
             if (time_to_show >= 0):
                 font = pygame.font.Font('freesansbold.ttf', 18)
-                text = font.render(f'Shield enable for {time_to_show}', True, (0,0,0))
+                text = font.render(f'Power enable for {time_to_show}', True, (0,0,0))
                 text_rect = text.get_rect()
                 text_rect.center = (500, 40)
                 screen.blit(text,text_rect)
             else:
                 self.shield = False
-                if(self.type == SHIELD_TYPE ):
+                if(self.type == SHIELD_TYPE or self.type == HAMMER_TYPE):
                     self.type = DEFAULT_TYPE

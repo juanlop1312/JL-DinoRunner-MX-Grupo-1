@@ -57,7 +57,7 @@ class Game:
         user_input = pygame.key.get_pressed()
         self.player.update(user_input)
         self.obstacle_manager.update(self)
-        self.power_up_manager.update(self.points, self.game_speed, self.player)
+        self.power_up_manager.update(self.game_speed, self.player, self.obstacle_manager)
 
 
 
@@ -68,6 +68,7 @@ class Game:
         self.clock.tick(FPS)
         self.screen.fill((255, 255, 255))
         self.draw_score()
+        self.obstacle_manager.draw_cloud(self.screen)
         self.draw_background()
         self.player.draw(self.screen)
         self.obstacle_manager.draw(self.screen)
@@ -95,7 +96,7 @@ class Game:
             self.game_speed +=1
 
         text,text_rect = text_utils.get_score_element(self.points)
-        self.player.check_visibility(self.screen)
+        self.player.check_visibility(self.screen, self.obstacle_manager)
         self.screen.blit(text,text_rect)
     
 
@@ -130,9 +131,14 @@ class Game:
             if event.type == pygame.QUIT:
                 self.playing = False
                 self.running = False
+                self.obstacle_manager = ObstacleManager()
+                self.Player_Heart_Manager = PlayerHeartManager()
                 pygame.display.quit()
                 pygame.quit()
             if event.type == pygame.KEYDOWN:
+                self.obstacle_manager = ObstacleManager()
+                self.points = 0
+                self.game_speed = 20
                 self.Player_Heart_Manager = PlayerHeartManager() 
                 self.run()
                 
