@@ -6,6 +6,7 @@ from dino_runner.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, T
 from dino_runner.components.player_heart.Player_Heart_Manager import PlayerHeartManager
 from dino_runner.components.power_ups.power_up_manager import PowerUpManager
 from dino_runner.components import text_utils
+from dino_runner.utils.constants import PRINCIPAL_SOUND
 
 class Game:
     def __init__(self):
@@ -28,6 +29,14 @@ class Game:
         self.death_count = 0
         self.points = 0
         self.running = True
+        PRINCIPAL_SOUND.set_volume(0.02)
+        PRINCIPAL_SOUND.play()
+        chanel = pygame.mixer.find_channel(True)
+        chanel.play(PRINCIPAL_SOUND, -1)
+        #necesita tener su propio canal para que no interfiera con la demas animaciones
+
+
+
 
     def execute(self):
         while self.running :
@@ -119,9 +128,9 @@ class Game:
             text, text_rect = text_utils.get_centered_message("presione cualquier tecla para iniciar")
             self.screen.blit(text,text_rect)
         elif self.death_count > 0:
-            text, text_rect = text_utils.get_centered_message(" ")
-            score , score_rect =text_utils.get_centered_message("your score is:"+str(self.points), height = half_screen_height + 100)
-            death , death_rect = text_utils.get_centered_message("-     death count : "+ str(self.death_count), half_screen_height + 150 )
+            text, text_rect = text_utils.get_centered_message("PRESIONE UNA TECLA PARA REITENTAR", height = SCREEN_HEIGHT//2 + 150)
+            score , score_rect =text_utils.get_centered_message("TU PUNTAJE ES: "+str(self.points), height = SCREEN_HEIGHT // 2 +100)
+            death , death_rect = text_utils.get_centered_message("MUERTES POR JUGAR : "+ str(self.death_count),height = SCREEN_HEIGHT // 2 )
             self.screen.blit(score, score_rect)
             self.screen.blit(text , text_rect)
             self.screen.blit(death , death_rect)

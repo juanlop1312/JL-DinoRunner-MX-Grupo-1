@@ -2,6 +2,8 @@ import pygame
 import os
 
 # Global Constants
+pygame.mixer.init()
+pygame.mixer.set_reserved(1)
 TITLE = "Chrome Dino Runner"
 SCREEN_HEIGHT = 600
 SCREEN_WIDTH = 1100
@@ -72,6 +74,17 @@ TNT = pygame.image.load(os.path.join(IMG_DIR, 'Other/tnt.jpg'))
 BG = pygame.image.load(os.path.join(IMG_DIR, 'Other/Track.png'))
 
 HEART = pygame.image.load(os.path.join(IMG_DIR, 'Other/SmallHeart.png'))
+
+
+PRINCIPAL_SOUND = pygame.mixer.Sound(os.path.join(IMG_DIR, 'sounds/tema_principal.mp3'))
+JUMPING_SONG = pygame.mixer.Sound(os.path.join(IMG_DIR, 'sounds/salto_sound.mp3'))
+DUCKING_SONG = pygame.mixer.Sound(os.path.join(IMG_DIR, 'sounds/agacharse.mp3'))
+SHIELD_SOUND = pygame.mixer.Sound(os.path.join(IMG_DIR, 'sounds/shield_sound.mp3'))
+HAMMER_SOUND = pygame.mixer.Sound(os.path.join(IMG_DIR, 'sounds/hammer_sound.mp3'))
+TNT_SOUND = pygame.mixer.Sound(os.path.join(IMG_DIR, 'sounds/tnt.mp3'))
+DAMAGE_SOUND = pygame.mixer.Sound(os.path.join(IMG_DIR, 'sounds/daño_sound.mp3'))
+
+
 HAMMER_TYPE = "hammer"
 DEFAULT_TYPE = "default"
 HEART_COUNT = 5

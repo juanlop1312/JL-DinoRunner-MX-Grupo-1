@@ -1,4 +1,4 @@
-from dino_runner.utils.constants import HAMMER_TYPE,RUNNING,JUMPING,DEFAULT_TYPE,DUCKING  ,SHIELD_TYPE, RUNNING_SHIELD , JUMPING_SHIELD , DUCKING_SHIELD, RUNNING_HAMMER, JUMPING_HAMMER, DUCKING_HAMMER
+from dino_runner.utils.constants import HAMMER_TYPE,RUNNING,JUMPING,DEFAULT_TYPE,DUCKING  ,SHIELD_TYPE, RUNNING_SHIELD , JUMPING_SHIELD , DUCKING_SHIELD, RUNNING_HAMMER, JUMPING_HAMMER, DUCKING_HAMMER, JUMPING_SONG,DUCKING_SONG,SHIELD_SOUND
 import pygame
 class Dinosaur :
     X_pos = 80
@@ -43,10 +43,18 @@ class Dinosaur :
             self.duck()
 
         if user_input[ pygame.K_DOWN] and not self.dino_jump:
+            DUCKING_SONG.set_volume(0.5)
+            DUCKING_SONG.stop()
+            DUCKING_SONG.play()
+            
             self.dino_run = False
             self.dino_jump = False
             self.dino_duck = True
+
         elif user_input[ pygame.K_UP] and not self.dino_jump:
+            JUMPING_SONG.set_volume(0.1)
+            JUMPING_SONG.play()
+            
             self.dino_run = False
             self.dino_jump = True
             self.dino_duck= False
@@ -101,7 +109,6 @@ class Dinosaur :
                 text_rect.center = (500, 75)
                 screen.blit(text,text_rect)
             else:
-                print("TNT ACABADO TIEMPo")
                 obstacle.disable_obstacles = False
                 self.tnt = False
                 
@@ -116,5 +123,6 @@ class Dinosaur :
                 screen.blit(text,text_rect)
             else:
                 self.shield = False
+                SHIELD_SOUND.stop()
                 if(self.type == SHIELD_TYPE or self.type == HAMMER_TYPE):
                     self.type = DEFAULT_TYPE

@@ -4,7 +4,7 @@ from dino_runner.components.obstacles.cloud import Cloud
 import pygame
 from dino_runner.utils.constants import LARGE_CACTUS, SMALL_CACTUS , BIRD, CLOUD
 from dino_runner.components.obstacles.bird import bird
-
+from dino_runner.utils.constants import DAMAGE_SOUND
 
 class ObstacleManager:
     def __init__(self):
@@ -35,6 +35,7 @@ class ObstacleManager:
         for obstacle in self.obstacles:
             obstacle.update(game.game_speed, self.obstacles)
             if game.player.dino_rect.colliderect(obstacle.rect)  and game.player.shield == False: #CHocar y no tener el escudo
+                DAMAGE_SOUND.play()
                 game.Player_Heart_Manager.reduce_heart()
                 if game.Player_Heart_Manager.heart_count > 0 :
                         self.obstacles.pop()
