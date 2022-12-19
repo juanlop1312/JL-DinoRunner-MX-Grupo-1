@@ -23,18 +23,20 @@ class ObstacleManager:
 
         for obstacle in self.obstacles:
             obstacle.update(game.game_speed, self.obstacles)
-            if game.player.dino_rect.colliderect(obstacle.rect): #si hubo un choque retorna true
+            if game.player.dino_rect.colliderect(obstacle.rect)  and game.player.shield == False: #CHocar y no tener el escudo
                 game.Player_Heart_Manager.reduce_heart()
-
-                if game.Player_Heart_Manager.heart_count >0 :
+                if game.Player_Heart_Manager.heart_count > 0 :
                         self.obstacles.pop()
-                
                 else :
                     pygame.time.delay(500)
                     self.obstacles.remove(obstacle)
                     game.playing = False
                     game.death_count += 1
                     break
+            if game.player.dino_rect.colliderect(obstacle.rect)  and game.player.shield == True: #CHocar y no tener el escudo
+                if game.Player_Heart_Manager.heart_count > 0 :
+                        self.obstacles.pop()
+
 
 
     def draw(self, screen):
